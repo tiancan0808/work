@@ -1,0 +1,59 @@
+model:
+  base_learning_rate: 4e-6
+  target: taming.models.vqgan.VQModel
+  params:
+    embed_dim: 64
+    n_embed: 64
+    monitor: val/nll_loss
+    classname: class1
+    ddconfig:
+      double_z: False
+      z_channels: 128
+      resolution: 224
+      in_channels: 1
+      out_ch: 1
+      ch: 32
+      dropout: 0.0
+    lossconfig:
+      target: taming.modules.losses.vqperceptual.VQLPIPSWithDiscriminator
+      params:
+        disc_num_layers: 2
+        disc_ndf: 128
+        win_size: 5
+        sigma: 1.0
+        alpha: 0.5
+        beta: 1.0
+        disc_in_channels: 1
+        disc_start: 40
+        disc_weight: 0.001
+        codebook_weight: 1.0
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 10
+    num_workers: 4
+    train:
+      target: taming.data.new_dataloader.DAGMDataset
+      params:
+        source: ../数据集/DAGM
+        classname: class1
+        split: train
+        resize: 256
+        imagesize: 224
+    validation:
+      target: taming.data.new_dataloader.DAGMDataset
+      params:
+        source: ../数据集/DAGM
+        classname: class1
+        split: val
+        resize: 256
+        imagesize: 224
+    test:
+      target: taming.data.new_dataloader.DAGMDataset
+      params:
+        source: ../数据集/DAGM
+        classname: class1
+        split: test
+        resize: 256
+        imagesize: 224
+
