@@ -477,8 +477,8 @@ if __name__ == "__main__":
         #             cpu = True
         #         else:
         trainer_config['accelerator'] = 'gpu' # 没有gpu 改为cpu
-        # gpuinfo = trainer_config["devices"]
-        # print(f"Running on GPUs {gpuinfo}")
+        gpuinfo = trainer_config["devices"]
+        print(f"Running on GPUs {gpuinfo}")
         #         if all(gpuinfo.split(',')):
         #             trainer_config['sync_batchnorm'] = True
         trainer_opt = argparse.Namespace(**trainer_config)

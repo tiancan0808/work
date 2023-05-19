@@ -5,7 +5,7 @@ model:
     embed_dim: 64
     n_embed: 64
     monitor: val/nll_loss
-    classname: class1
+    classname: class6
     ddconfig:
       double_z: False
       z_channels: 128
@@ -14,11 +14,12 @@ model:
       out_ch: 1
       ch: 32
       dropout: 0.0
+      use_attn:
     lossconfig:
       target: taming.modules.losses.vqperceptual.VQLPIPSWithDiscriminator
       params:
-        disc_num_layers: 2
-        disc_ndf: 128
+        disc_num_layers: 3
+        disc_ndf: 64
         win_size: 5
         sigma: 1.0
         alpha: 0.5
@@ -30,13 +31,13 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 10
+    batch_size: 1
     num_workers: 4
     train:
       target: taming.data.new_dataloader.DAGMDataset
       params:
         source: ../数据集/DAGM
-        classname: class1
+        classname: class6
         split: train
         resize: 256
         imagesize: 224
@@ -44,7 +45,7 @@ data:
       target: taming.data.new_dataloader.DAGMDataset
       params:
         source: ../数据集/DAGM
-        classname: class1
+        classname: class6
         split: val
         resize: 256
         imagesize: 224
@@ -52,7 +53,7 @@ data:
       target: taming.data.new_dataloader.DAGMDataset
       params:
         source: ../数据集/DAGM
-        classname: class1
+        classname: class6
         split: test
         resize: 256
         imagesize: 224

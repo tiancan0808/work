@@ -54,7 +54,7 @@ class VQLPIPSWithDiscriminator(nn.Module):
         assert disc_loss in ["hinge", "vanilla", 'ls']
         self.disc_loss_type = disc_loss
         self.codebook_weight = codebook_weight
-        self.ssim_loss = SSIM(win_size=win_size, sigma=sigma, in_channel=disc_in_channels)
+        self.ssim_loss = SSIM(win_size=win_size, sigma=sigma, in_channel=disc_in_channels).cuda()
         #         self.perceptual_loss = LPIPS().eval()\
         #         self.perceputal_loss = SSIM(win_size=win_size,sigma=sigma)
         self.perceptual_weight = perceptual_weight

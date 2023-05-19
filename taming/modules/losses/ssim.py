@@ -20,11 +20,11 @@ class SSIM(nn.Module):
             _1D_window = g.unsqueeze(1)
             _2D_window = _1D_window.mm(_1D_window.t()).unsqueeze(0).unsqueeze(0)
             if in_channel == 1:
-                self.w = _2D_window
+                self.w = _2D_window.cuda()
             else:
-                self.w = _2D_window.expand(in_channel, 1, win_size, win_size)
+                self.w = _2D_window.expand(in_channel, 1, win_size, win_size).cuda()
         else:
-            self.w = torch.ones(in_channel, 1, win_size, win_size).div(win_size ** 2)
+            self.w = torch.ones(in_channel, 1, win_size, win_size).div(win_size ** 2).cuda()
         if use_sample_covariance:
             NP = win_size ** 2
             self.cov_norm = NP / (NP - 1)
